@@ -7,9 +7,18 @@ LaTeX Curriculum Vitae document generator server application. Written in Clojure
 * Leiningen 2.0.0 or above
 
 ## Running
-To host the server, run the commands:
+To host the live server with hot reloading, use:
 ```sh
 cd cv-generator/
-lein ring server-headless 8080
+lein ring server-headless
 ```
-then access it with http://localhost:8080/
+
+Alternatively, you may "compile" the project into a single standalone java archive:
+```sh
+cd cv-generator/
+lein ring uberjar
+java -jar path/to/project-1.2.3-standalone.jar
+```
+
+Default port is 8080, so access the server with: http://localhost:8080/
+

@@ -9,13 +9,11 @@ LaTeX Curriculum Vitae document generator server application. Written in Clojure
 ## Running
 To host the live server with hot reloading, use:
 ```sh
-cd cv-generator/
 lein ring server-headless
 ```
 
 Alternatively, you may "compile" the project into a single standalone java archive:
 ```sh
-cd cv-generator/
 lein ring uberjar
 java -jar path/to/project-1.2.3-standalone.jar
 ```

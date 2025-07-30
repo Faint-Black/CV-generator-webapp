@@ -2,13 +2,14 @@
   (:require
    [compojure.core :refer :all]
    [compojure.route :as route]
+   [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
 (defroutes app-routes
   (POST "/api/submit"
         request
         (do
-          (println "input text sent!")
+          (println "input text = " (:text (:body request)))
           {:status 200
            :headers {"Content-Type" "text/html"}
            :body "Roger Roger!"}))
@@ -24,6 +25,7 @@
 
 (def app
   (wrap-defaults
-   app-routes
+   ;; convert raw HTTP streams into JSON maps
+   (wrap-json-response (wrap-json-body app-routes {:keywords? true}))
    ;; disable CSRF token validators, because i'm lazy
    (assoc-in site-defaults [:security :anti-forgery] false)))

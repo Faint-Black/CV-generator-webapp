@@ -9,4 +9,5 @@
   :ring {:handler cv-generator.handler/app :port 8080}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.2"]]}})
+                        [ring/ring-mock "0.3.2"]
+                        [ring/ring-json "0.5.1"]]}})

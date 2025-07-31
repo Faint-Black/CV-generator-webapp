@@ -1,5 +1,6 @@
 (ns cv-generator.handler
   (:require
+   [clojure.string :as string]
    [compojure.core :refer :all]
    [compojure.route :as route]
    [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
@@ -8,16 +9,14 @@
 (defroutes app-routes
   (POST "/api/submit"
         request
-        (do
-          (println "input text = " (:text (:body request)))
+        (let [input-text (:text (:body request))
+              output-text (string/upper-case input-text)]
+          (println "input text = \"" input-text \")
+          (println "output text = \"" output-text \")
           {:status 200
            :headers {"Content-Type" "text/html"}
-           :body "Roger Roger!"}))
-  (GET "/"
-       request
-       (do
-         (println "site accessed!")
-         (ring.util.response/redirect "/index.html")))
+           :body output-text}))
+  (GET "/" request (ring.util.response/redirect "/index.html"))
   (route/resources "/")
   (route/not-found {:status 404
                     :headers {"Content-Type" "text/html"}

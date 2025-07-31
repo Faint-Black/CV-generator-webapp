@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN lein ring uberjar
 
-# 2) Produce docker image
+# 2) Run java archive
 FROM openjdk
 WORKDIR /app
 COPY --from=builder /app/target/cv-generator-1.0.0-standalone.jar app.jar

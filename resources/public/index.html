@@ -5,6 +5,7 @@
     <title>Clojure CV LaTeX generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   </head>
   <body>
     <header>
@@ -14,8 +15,9 @@
       <p>Place your input text here:</p>
       <input id="text-input" type="text" placeholder="Enter text here">
       <button onclick="sendText()">Submit</button>
-      <p>This is your input in uppercase:</p>
-      <input id="text-output" type="text" placeholder="Output text" readonly>
+      <hr>
+      This is your input in uppercase:<br>
+      <textarea id="text-output" placeholder="Output text" readonly></textarea>
       <script src="script.js"></script>
     </main>
   </body>

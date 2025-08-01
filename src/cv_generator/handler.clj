@@ -11,8 +11,6 @@
         request
         (let [input-text (:text (:body request))
               output-text (string/upper-case input-text)]
-          (println "input text = \"" input-text \")
-          (println "output text = \"" output-text \")
           {:status 200
            :headers {"Content-Type" "text/html"}
            :body output-text}))

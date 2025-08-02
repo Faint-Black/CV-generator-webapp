@@ -1,6 +1,7 @@
 (ns cv-generator.handler
   (:require
    [cv-generator.latex :as latex]
+   [cv-generator.html :as html]
    [clojure.string :as string]
    [compojure.core :refer :all]
    [compojure.route :as route]
@@ -12,7 +13,7 @@
         request
         (let [input-text (:text (:body request))
               output-latex (latex/build-latex input-text)
-              output-html (latex/latex-to-html output-latex)]
+              output-html (html/latex-to-html output-latex)]
           {:status 200
            :headers {"Content-Type" "text/html"}
            :body output-html}))

@@ -1,5 +1,6 @@
 (ns cv-generator.handler
   (:require
+   [cv-generator.latex :as latex]
    [clojure.string :as string]
    [compojure.core :refer :all]
    [compojure.route :as route]
@@ -10,10 +11,11 @@
   (POST "/api/submit"
         request
         (let [input-text (:text (:body request))
-              output-text (string/upper-case input-text)]
+              output-latex (latex/build-latex input-text)
+              output-html (latex/latex-to-html output-latex)]
           {:status 200
            :headers {"Content-Type" "text/html"}
-           :body output-text}))
+           :body output-html}))
   (GET "/" request (ring.util.response/redirect "/index.html"))
   (route/resources "/")
   (route/not-found {:status 404

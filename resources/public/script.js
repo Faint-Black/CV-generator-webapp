@@ -9,7 +9,7 @@ function sendText() {
     })
         .then(response => response.text())
         .then(data => {
-            output.value = data;
+            output.innerHTML = data;
             output.style.height = 'auto';
             output.style.height = output.scrollHeight + 'px';
         });

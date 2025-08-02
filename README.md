@@ -1,5 +1,5 @@
-# CV-generator-webapp
-LaTeX Curriculum Vitae document generator server application. Written in Clojure, powered by Compojure.
+# CV generator webserver application
+LaTeX Curriculum Vitae document generator web application. Written in Clojure, powered by Compojure.
 
 ## Prerequisites
 (Only applies for non-Docker users)

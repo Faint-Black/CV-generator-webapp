@@ -12,13 +12,26 @@
       <h1>Curriculum Vitae Generator</h1>
     </header>
     <main>
-      <p>Type your name, then click Submit:</p>
-      <input id="text-input" type="text" placeholder="Enter text here">
+      <p>Enter your credentials, then click Submit:</p>
+      <div class="form-entry">
+        <b>NAME:</b><br>
+        <input id="input-name" type="text" placeholder="Enter text here">
+      </div>
+      <div class="form-entry">
+        <b>TITLE:</b><br>
+        <input id="input-title" type="text" placeholder="Enter text here"><br>
+      </div>
       <button onclick="sendText()">Submit</button>
       <hr>
-      This is your Curriculum Vitae, in LaTeX:<br>
-      <div id="text-output"></div>
+      <p>This is your Curriculum Vitae, in LaTeX:</p>
+      <div id="latex-output"></div>
       <script src="script.js"></script>
+      <hr>
     </main>
+    <footer>
+      <a href="https://github.com/Faint-Black/CV-generator-webapp" target="_blank">
+        <img src="github.png">
+      </a>
+    </footer>
   </body>
 </html>

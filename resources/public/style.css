@@ -31,7 +31,33 @@ hr {
     margin-bottom: 2em;
 }
 
-#text-output {
+p {
+    color: purple;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    font-weight: bold;
+    color: purple;
+    border: 3px solid purple;
+    border-radius: 20px;
+    width: 12em;
+    height: 4em;
+    margin-top: 2em;
+}
+
+div.form-entry {
+    border: 2px solid purple;
+    border-radius: 10px;
+    width: 50%;
+    margin-bottom: 0.5em;
+    padding: 2em;
+}
+
+#latex-output {
     flex: 1;
     width: 100%;
     box-sizing: border-box;
@@ -41,4 +67,9 @@ hr {
     border-radius: 10px;
     padding: 1em;
     font-family: monospace;
+}
+
+footer {
+    padding: 5em;
+    text-align: center;
 }

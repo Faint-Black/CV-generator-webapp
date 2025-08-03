@@ -60,12 +60,13 @@
 
 (defn build-latex
   "Takes all input parameters and returns the built TeX"
-  [user-name]
+  [user-name user-title]
   (string/join
    [latex-header "\n\n"
     latex-packages "\n\n"
     latex-geometry "\n\n"
     latex-configs "\n\n"
     latex-begin-doc "\n\n"
-    "Hello, my name is: " (or-undefined user-name) "\n\n"
+    "Hello, my name is " (or-undefined user-name)
+    " and i am a " (or-undefined user-title) ".\n\n"
     latex-end-doc "\n"]))

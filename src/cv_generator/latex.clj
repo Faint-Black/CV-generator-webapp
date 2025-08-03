@@ -2,13 +2,6 @@
   (:require
    [clojure.string :as string]))
 
-(defn or-undefined
-  "Returns the string 'UNDEFINED' if the input string is empty"
-  [input]
-  (if (string/blank? input)
-    "UNDEFINED"
-    input))
-
 (def latex-keywords
   ["\\documentclass"
    "\\usepackage"
@@ -19,6 +12,22 @@
    "\\titlespacing*"
    "\\setlist"
    "\\hypersetup"])
+
+;; for the sneaky little buggers...
+(def latex-dangerous-user-commands
+  ["\\input"
+   "\\include"
+   "\\includegraphics"
+   "\\usepackage"
+   "\\openin"
+   "\\read"
+   "\\write"
+   "\\closein"
+   "\\closeout"
+   "\\message"
+   "\\errmessage"
+   "\\csname"
+   "\\endcsname"])
 
 (def latex-header
   "\\documentclass[10pt]{article}")
@@ -58,6 +67,27 @@
 (def latex-end-doc
   "\\end{document}")
 
+(defn or-undefined
+  "Returns the string 'UNDEFINED' if the input string is empty"
+  [input]
+  (if (string/blank? input)
+    "[UNDEFINED]"
+    input))
+
+(defn redact-dangerous-commands
+  "Redacts any dangerous custom LaTeX command"
+  [input]
+  (if (some (partial string/includes? input) latex-dangerous-user-commands)
+    "[REDACTED]"
+    input))
+
+(defn sanitize-input
+  "Takes in the raw user input and sanitizes it for safe consumption"
+  [input]
+  (-> input
+      (or-undefined)
+      (redact-dangerous-commands)))
+
 (defn build-latex
   "Takes all input parameters and returns the built TeX"
   [user-name user-title]
@@ -67,6 +97,6 @@
     latex-geometry "\n\n"
     latex-configs "\n\n"
     latex-begin-doc "\n\n"
-    "Hello, my name is " (or-undefined user-name)
-    " and i am a " (or-undefined user-title) ".\n\n"
+    "Hello, my name is " (sanitize-input user-name)
+    " and i am a " (sanitize-input user-title) ".\n\n"
     latex-end-doc "\n"]))

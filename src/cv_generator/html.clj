@@ -5,13 +5,21 @@
 
 (def html-style
   "<style>
-.keyword {
+span.keyword {
     color: blue;
     font-weight: bold;
 }
-.comment {
-    opacity: 0.5;
+span.comment {
+    color: gray;
     font-weight: bold;
+}
+span.undefined {
+    background-color: silver;
+    border: 1px solid black;
+}
+span.redacted {
+    background-color: yellow;
+    border: 1px solid black;
 }
 </style>")
 
@@ -43,6 +51,16 @@
   [input]
   (string/replace input #"%.*" #(wrap-in-span % "comment")))
 
+(defn latex-to-html-color-undefined
+  "Adds font colors to all missing field inputs"
+  [input]
+  (string/replace input "[UNDEFINED]" (wrap-in-span "[UNDEFINED]" "undefined")))
+
+(defn latex-to-html-color-redacted
+  "Adds font colors to all post-sanitized inputs"
+  [input]
+  (string/replace input "[REDACTED]" (wrap-in-span "[REDACTED]" "redacted")))
+
 (defn latex-to-html
   "Converts the TeX string into an HTML string"
   [input]
@@ -50,4 +68,6 @@
       (latex-to-html-wrap-pre)
       (latex-to-html-prepend-style)
       (latex-to-html-color-keywords)
-      (latex-to-html-color-comments)))
+      (latex-to-html-color-comments)
+      (latex-to-html-color-undefined)
+      (latex-to-html-color-redacted)))

@@ -14,14 +14,20 @@
     <main>
       <p>Enter your credentials, then click Submit:</p>
       <div class="form-entry">
-        <b>NAME:</b><br>
+        <span class="fieldname">NAME:</span>
         <input id="input-name" type="text" placeholder="Example: Bruce Banner">
       </div>
       <div class="form-entry">
-        <b>TITLE:</b><br>
-        <input id="input-title" type="text" placeholder="Example: Nuclear Physicist"><br>
+        <span class="fieldname">TITLE:</span>
+        <input id="input-title" type="text" placeholder="Example: Nuclear Physicist">
       </div>
-      <button onclick="sendText()">Submit</button>
+      <div class="form-entry">
+        <span class="fieldname">CONTACT INFO:</span>
+        <div id="contact-link-form"></div>
+        <button type="button" class="plus" onclick="plusContactLink()">+</button>
+        <button type="button" class="minus" onclick="minusContactLink()">-</button>
+      </div>
+      <button class="submission" onclick="sendText()">Submit</button>
       <hr>
       <p>This is your Curriculum Vitae, in LaTeX:</p>
       <div id="latex-output"></div>

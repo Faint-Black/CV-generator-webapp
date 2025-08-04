@@ -8,4 +8,10 @@
     (is (= "foobar" (sanitize-input "foobar")))
     (is (= "\\textbf{foobar}" (sanitize-input "\\textbf{foobar}")))
     (is (= "[UNDEFINED]" (sanitize-input "")))
-    (is (= "[REDACTED]" (sanitize-input "\\immediate\\write18{echo pwned!}")))))
+    (is (= "[REDACTED]" (sanitize-input "\\immediate\\write18{echo pwned!}")))
+    (is (= {:foo "[UNDEFINED]" :bar "[REDACTED]"}
+           (sanitize-input {:foo "" :bar "\\write"})))
+    (is (= [{:foo "[UNDEFINED]" :bar ["[UNDEFINED]" "[UNDEFINED]" "[UNDEFINED]"]}
+            {:biz "[REDACTED]" :baz "baz"}]
+           (sanitize-input [{:foo "" :bar ["" "" ""]}
+                            {:biz "\\write" :baz "baz"}])))))

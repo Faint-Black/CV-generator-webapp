@@ -25,7 +25,8 @@
         (let [json-response (:body request)
               user-name (:name json-response)
               user-title (:title json-response)
-              output-latex (latex/build-latex user-name user-title)
+              user-contacts (:contacts json-response)
+              output-latex (latex/build-latex user-name user-title user-contacts)
               output-html (html/latex-to-html output-latex)]
           (do
             (println (log-input json-response))

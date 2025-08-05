@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as string]))
 
-(def latex-keywords
+(def latex-keywords-type1
   ["\\documentclass"
    "\\usepackage"
    "\\begin"
@@ -12,6 +12,16 @@
    "\\titlespacing*"
    "\\setlist"
    "\\hypersetup"])
+
+(def latex-keywords-type2
+  ["\\\\"
+   "\\textbf"
+   "\\textit"
+   "\\texttt"
+   "\\hline"
+   "\\hfill"
+   "\\section"
+   "\\subsection"])
 
 ;; for the sneaky little buggers...
 (def latex-dangerous-user-commands

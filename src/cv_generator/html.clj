@@ -5,8 +5,12 @@
 
 (def html-style
   "<style>
-span.keyword {
-    color: blue;
+span.keywordOne {
+    color: #1111ff;
+    font-weight: bold;
+}
+span.keywordTwo {
+    color: #8855ff;
     font-weight: bold;
 }
 span.comment {
@@ -41,10 +45,13 @@ span.redacted {
 (defn latex-to-html-color-keywords
   "Adds font colors to all LaTeX keywords"
   [input]
-  (reduce
-   (fn [s kw] (string/replace s kw (wrap-in-span kw "keyword")))
-   input
-   latex/latex-keywords))
+  (let [k1 (reduce (fn [s kw] (string/replace s kw (wrap-in-span kw "keywordOne")))
+                   input
+                   latex/latex-keywords-type1)
+        k2 (reduce (fn [s kw] (string/replace s kw (wrap-in-span kw "keywordTwo")))
+                   k1
+                   latex/latex-keywords-type2)]
+    k2))
 
 (defn latex-to-html-color-comments
   "Adds font colors to all LaTeX comments"

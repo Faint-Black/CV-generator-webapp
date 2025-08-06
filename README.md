@@ -28,7 +28,7 @@ lein ring server-headless
 
 * **With lein + java:**
 
-To "compile" the project into a single standalone java archive:
+To "compile" the project into a single standalone java archive and run it:
 ```sh
 lein ring uberjar
 java -jar path/to/project-1.2.3-standalone.jar

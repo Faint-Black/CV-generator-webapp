@@ -23,7 +23,7 @@
    "\\section"
    "\\subsection"])
 
-;; for the sneaky little buggers...
+;; for the sneaky little exploiters...
 (def latex-dangerous-user-commands
   ["\\input"
    "\\include"

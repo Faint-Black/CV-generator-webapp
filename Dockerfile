@@ -1,10 +1,10 @@
-# 1) Compile java archive
+# 1) Run tests and compile java archive
 FROM clojure AS builder
 WORKDIR /app
 COPY . .
-RUN lein ring uberjar
+RUN lein test && lein ring uberjar
 
-# 2) Run java archive
+# 2) Install the tectonic engine then run the java archive
 FROM openjdk:26-slim
 WORKDIR /app
 RUN apt-get update && apt-get install -y \

@@ -24,7 +24,7 @@
         dir (fs/create-dirs dirname)
         file (fs/file dir "cv.tex")
         _ (spit file built-latex)]
-    {:shell-result (sh "tectonic" "cv.tex" :dir dirname)
+    {:shell-result (sh "tectonic" "--untrusted" "cv.tex" :dir dirname)
      :input-file (string/join [dirname "/cv.tex"])
      :output-file (string/join [dirname "/cv.pdf"])}))
 

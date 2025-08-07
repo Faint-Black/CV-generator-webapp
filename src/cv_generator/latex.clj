@@ -104,8 +104,10 @@
 
 (defn contact-entry
   "Returns a contact link string"
-  [type info]
-  (let [type-string
+  [contact]
+  (let [type (:type contact)
+        info (:info contact)
+        type-string
         (cond
           (= type "github")   "\\faGithub"
           (= type "email")    "\\faEnvelopeO"
@@ -113,7 +115,16 @@
           (= type "phone")    "\\faWhatsapp"
           (= type "location") "\\faMapMarker"
           :else "")]
-    (string/join ["    \\hfill " type-string " " info "\n"])))
+    (string/join [type-string " " info])))
+
+(defn recursive-contact-builder
+  "First and last contacts don't have hfills"
+  [contacts]
+  (if (empty? contacts)
+    ""
+    (string/join ["    " (contact-entry (first contacts)) "\n"
+                  (if (= 1 (count contacts)) "" "    \\hfill\n")
+                  (recursive-contact-builder (rest contacts))])))
 
 (defn contact-info
   "Builds the CV header"
@@ -122,8 +133,7 @@
    ["\\begin{center}\n"
     "    \\textbf{" name "} \\\\\n"
     "    " title " \\\\[1.3em]\n"
-    (string/join (map #(contact-entry (:type %) (:info %)) contacts))
-    "    \\hfill\n"
+    (recursive-contact-builder contacts)
     "\\end{center}\n"]))
 
 (defn build-latex

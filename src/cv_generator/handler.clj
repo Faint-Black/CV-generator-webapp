@@ -52,10 +52,10 @@
             (let [comp-result (texcompile/compile-latex output-latex current-time)
                   comp-status (texcompile/compile-ok comp-result)]
               (if (:success comp-status)
-                {:status 200
-                 :headers {"Content-Type" "text/html"}
-                 :body (:message comp-status)}
-                {:status 200
+                (ring.util.response/content-type
+                 (ring.util.response/file-response (:output-file comp-result))
+                 "application/pdf")
+                {:status 500
                  :headers {"Content-Type" "text/html"}
                  :body (:message comp-status)})))))
   (GET "/" request (ring.util.response/redirect "/index.html"))

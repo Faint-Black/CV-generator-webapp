@@ -12,7 +12,7 @@
       <h1>Curriculum Vitae Generator</h1>
     </header>
     <main>
-      <p>Enter your credentials, then click Submit:</p>
+      <p>Enter your credentials, then click Submit to only view the TeX source, or Submit and Compile to open the PDF file:</p>
       <div class="form-entry">
         <span class="fieldname">NAME:</span>
         <input id="input-name" type="text" placeholder="Example: Bruce Banner">
@@ -28,7 +28,7 @@
         <button type="button" class="minus" onclick="minusContactLink()">-</button>
       </div>
       <button class="submission" onclick="buildLatex()">Submit</button>
-      <button class="submission" onclick="compileLatex()">Compile</button>
+      <button class="submission" onclick="compileLatex()">Submit and Compile</button>
       <hr>
       <p>This is your Curriculum Vitae, in LaTeX:</p>
       <div id="latex-output"></div>

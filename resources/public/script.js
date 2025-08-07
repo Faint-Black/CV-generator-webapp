@@ -1,10 +1,34 @@
-function sendText() {
+function buildLatex() {
     const input_name = document.getElementById("input-name").value;
     const input_title = document.getElementById("input-title").value;
     const input_contacts = collectContactEntries();
 
     const output = document.getElementById("latex-output");
     fetch('/api/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            name: input_name,
+            title: input_title,
+            contacts: input_contacts,
+        })
+    })
+        .then(response => response.text())
+        .then(data => {
+            output.innerHTML = data;
+            output.style.height = 'auto';
+            output.style.height = output.scrollHeight + 'px';
+            output.scrollIntoView({ behavior: "smooth" });
+        });
+}
+
+function compileLatex() {
+    const input_name = document.getElementById("input-name").value;
+    const input_title = document.getElementById("input-title").value;
+    const input_contacts = collectContactEntries();
+
+    const output = document.getElementById("latex-output");
+    fetch('/api/compile', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

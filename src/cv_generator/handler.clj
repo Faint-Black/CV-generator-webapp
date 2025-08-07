@@ -2,6 +2,7 @@
   (:require
    [cv-generator.latex :as latex]
    [cv-generator.html :as html]
+   [cv-generator.compile :as texcompile]
    [clojure.string :as string]
    [compojure.core :refer :all]
    [compojure.route :as route]
@@ -11,28 +12,52 @@
    [java.time LocalDateTime]
    [java.time.format DateTimeFormatter]))
 
-(defn log-input
-  "Returns a log string of the JSON input"
-  [json-input]
+(defn get-time-string
+  "Returns the current timestamp in the 2025-01-01-12h59m59s format"
+  []
   (let [unparsed-time (LocalDateTime/now)
         parsing-format (DateTimeFormatter/ofPattern "yyyy-MM-dd-HH'h'mm'm'ss's'")
         parsed-time (.format unparsed-time parsing-format)]
-    (str "LOG (" parsed-time "):\n" json-input)))
+    parsed-time))
+
+(defn log-submit
+  "Returns a log string of the JSON input"
+  [json-input time]
+  (str "LOG[submit] (" time "):\n" json-input))
+
+(defn log-compile
+  "Returns a log string of a compilation request"
+  [json-input time]
+  (str "LOG[compile] (" time "):\n" json-input))
 
 (defroutes app-routes
   (POST "/api/submit"
         request
-        (let [json-response (:body request)
-              user-name (:name json-response)
-              user-title (:title json-response)
-              user-contacts (:contacts json-response)
-              output-latex (latex/build-latex user-name user-title user-contacts)
+        (let [current-time (get-time-string)
+              json-response (:body request)
+              output-latex (latex/build-latex json-response)
               output-html (html/latex-to-html output-latex)]
           (do
-            (println (log-input json-response))
+            (println (log-submit json-response current-time))
             {:status 200
              :headers {"Content-Type" "text/html"}
              :body output-html})))
+  (POST "/api/compile"
+        request
+        (let [current-time (get-time-string)
+              json-response (:body request)
+              output-latex (latex/build-latex json-response)]
+          (do
+            (println (log-compile json-response current-time))
+            (let [comp-result (texcompile/compile-latex output-latex current-time)
+                  comp-status (texcompile/compile-ok comp-result)]
+              (if (:success comp-status)
+                {:status 200
+                 :headers {"Content-Type" "text/html"}
+                 :body (:message comp-status)}
+                {:status 200
+                 :headers {"Content-Type" "text/html"}
+                 :body (:message comp-status)})))))
   (GET "/" request (ring.util.response/redirect "/index.html"))
   (route/resources "/")
   (route/not-found {:status 404

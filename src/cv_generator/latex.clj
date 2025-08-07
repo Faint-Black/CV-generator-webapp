@@ -127,11 +127,11 @@
     "\\end{center}\n"]))
 
 (defn build-latex
-  "Takes all input parameters and returns the built TeX"
-  [user-name user-title user-contacts]
-  (let [sanitized-name (sanitize-input user-name)
-        sanitized-title (sanitize-input user-title)
-        sanitized-contacts (sanitize-input user-contacts)]
+  "Takes the input parameters of the JSON and returns the built TeX"
+  [user-json]
+  (let [sanitized-name (sanitize-input (:name user-json))
+        sanitized-title (sanitize-input (:title user-json))
+        sanitized-contacts (sanitize-input (:contacts user-json))]
     (string/join
      [latex-header "\n\n"
       latex-packages "\n\n"

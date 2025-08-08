@@ -144,17 +144,26 @@
     (recursive-contact-builder contacts)
     "\\end{center}\n"]))
 
+(defn aboutme-info
+  "Build the CV aboutme"
+  [aboutme]
+  (string/join
+   ["\\section{About Me}\n" aboutme "\n"]))
+
 (defn build-latex
   "Takes the input parameters of the JSON and returns the built TeX"
   [user-json]
-  (let [sanitized-name (sanitize-input (:name user-json))
-        sanitized-title (sanitize-input (:title user-json))
-        sanitized-contacts (sanitize-input (:contacts user-json))]
+  (let [sanitized-user-json (sanitize-input user-json)
+        name (:name sanitized-user-json)
+        title (:title sanitized-user-json)
+        contacts (:contacts sanitized-user-json)
+        aboutme (:aboutme sanitized-user-json)]
     (string/join
      [latex-header "\n\n"
       latex-packages "\n\n"
       latex-geometry "\n\n"
       latex-configs "\n\n"
       latex-begin-doc "\n\n"
-      (contact-info sanitized-name sanitized-title sanitized-contacts) "\n"
+      (contact-info name title contacts) "\n"
+      (aboutme-info aboutme) "\n"
       latex-end-doc "\n"])))

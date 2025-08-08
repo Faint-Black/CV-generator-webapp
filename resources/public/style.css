@@ -75,7 +75,7 @@ button.submission {
 div.form-entry {
     border: 2px solid purple;
     border-radius: 10px;
-    width: 50%;
+    width: 70%;
     margin-bottom: 0.5em;
     padding: 2em;
 }
@@ -85,7 +85,8 @@ div.form-entry {
     width: 100%;
     box-sizing: border-box;
     resize: none;
-    overflow: hidden;
+    overflow-x: scroll;
+    overflow-y: hidden;
     border: 3px solid purple;
     border-radius: 10px;
     padding: 1em;

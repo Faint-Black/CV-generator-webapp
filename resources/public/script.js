@@ -3,6 +3,7 @@ function makeUserJson() {
         name: document.getElementById("input-name").value,
         title: document.getElementById("input-title").value,
         contacts: collectContactEntries(),
+        aboutme: document.getElementById("input-aboutme").value,
     });
 }
 

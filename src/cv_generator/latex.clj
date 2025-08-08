@@ -11,7 +11,8 @@
    "\\titleformat"
    "\\titlespacing*"
    "\\setlist"
-   "\\hypersetup"])
+   "\\hypersetup"
+   "\\pagestyle"])
 
 (def latex-keywords-type2
   ["\\\\"
@@ -20,8 +21,16 @@
    "\\texttt"
    "\\hline"
    "\\hfill"
+   "\\href"
    "\\section"
-   "\\subsection"])
+   "\\subsection"
+   "\\tiny"
+   "\\small"
+   "\\large"
+   "\\Large"
+   "\\LARGE"
+   "\\huge"
+   "\\Huge"])
 
 ;; for the sneaky little exploiters...
 (def latex-dangerous-user-commands
@@ -41,7 +50,7 @@
    "\\loop"])
 
 (def latex-header
-  "\\documentclass[10pt]{article}")
+  "\\documentclass{article}")
 
 (def latex-packages
   "% ===== PACKAGES =====
@@ -67,7 +76,8 @@
 \\titleformat{\\section}{\\large\\bfseries\\scshape}{\\thesection}{1em}{}[\\titlerule]
 \\titlespacing*{\\section}{0pt}{1.5em}{0.5em}
 \\setlist[itemize]{leftmargin=*, nosep}
-\\hypersetup{colorlinks=true, urlcolor=blue}")
+\\hypersetup{colorlinks=true, urlcolor=blue}
+\\pagestyle{empty}")
 
 (def latex-begin-doc
   "% +==================+
@@ -106,16 +116,14 @@
   "Returns a contact link string"
   [contact]
   (let [type (:type contact)
-        info (:info contact)
-        type-string
-        (cond
-          (= type "github")   "\\faGithub"
-          (= type "email")    "\\faEnvelopeO"
-          (= type "linkedin") "\\faLinkedinSquare"
-          (= type "phone")    "\\faWhatsapp"
-          (= type "location") "\\faMapMarker"
-          :else "")]
-    (string/join [type-string " " info])))
+        info (:info contact)]
+    (cond
+      (= type "github") (string/join ["\\faGithub \\href{" info "}{GitHub}"])
+      (= type "email") (string/join ["\\faEnvelopeO \\href{mailto:" info "}{" info "}"])
+      (= type "linkedin") (string/join ["\\faLinkedinSquare \\href{" info "}{LinkedIn}"])
+      (= type "phone") (string/join ["\\faWhatsapp " info])
+      (= type "location") (string/join ["\\faMapMarker " info])
+      :else "")))
 
 (defn recursive-contact-builder
   "First and last contacts don't have hfills"
@@ -131,7 +139,7 @@
   [name title contacts]
   (string/join
    ["\\begin{center}\n"
-    "    \\textbf{" name "} \\\\\n"
+    "    \\textbf{\\Huge{" name "}} \\\\\n"
     "    " title " \\\\[1.3em]\n"
     (recursive-contact-builder contacts)
     "\\end{center}\n"]))
